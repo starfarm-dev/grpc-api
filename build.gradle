@@ -11,7 +11,7 @@ allprojects {
     version '1.0.0'
 
     repositories {
-        mavenCentral()
+        maven { url 'https://repo.starfarm.fun/repository/maven-public' }
 
         dependencies {
             compileOnly 'org.projectlombok:lombok:1.18.24'
