@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    group 'ru.starfarm'
+    version '1.0.0'
+
+    repositories {
+        mavenCentral()
+
+        dependencies {
+            compileOnly 'org.projectlombok:lombok:1.18.24'
+            annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+            compileOnly 'io.grpc:grpc-protobuf:1.51.0'
+            compileOnly 'io.grpc:grpc-stub:1.51.0'
+
+            runtimeOnly 'io.grpc:grpc-netty-shaded:1.51.0'
+        }
+    }
+
+    java {
+        withSourcesJar()
+    }
+
+    publishing {
+        repositories {
+            maven {
+                url 'https://repo.starfarm.fun/repository/maven-public-releases'
+                credentials {
+                    username System.getenv('SF_REPO_USER')
+                    password System.getenv('SF_REPO_PASSWORD')
+                }
+            }
+        }
+
+        publications {
+            version(MavenPublication) {
+                groupId group
+                artifactId project.name
+                version version
+                from project.components.java
+            }
+        }
+    }
+
+    tasks.withType(JavaCompile)*.options*.encoding = 'UTF-8'
+}
+
+dependencies {
+    implementation 'io.grpc:grpc-protobuf:1.51.0'
+    implementation 'io.grpc:grpc-stub:1.51.0'
+}

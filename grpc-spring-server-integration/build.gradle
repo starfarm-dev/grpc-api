@@ -1,0 +1,5 @@
+dependencies {
+    compileOnly rootProject
+
+    compileOnly 'org.springframework.boot:spring-boot-starter:2.7.2'
+}

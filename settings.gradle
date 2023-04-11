@@ -1,0 +1,4 @@
+rootProject.name = 'grpc-api'
+
+include 'grpc-kotlin-api', 'grpc-spring-server-integration', 'grpc-spring-client-integration'
+

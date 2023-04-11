@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  ru.starfarm.grpc.spring.config.GrpcServerConfig
