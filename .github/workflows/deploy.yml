@@ -1,0 +1,35 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ master ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.0.0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.0.0
+        with:
+          distribution: adopt
+          java-version: 8
+
+      - name: Caching Gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: ${{ runner.os }}-gradle-
+
+      - name: Deploy with Gradle
+        env:
+          SF_REPO_USER: ${{ secrets.SF_REPO_USER }}
+          SF_REPO_PASSWORD: ${{ secrets.SF_REPO_PASSWORD }}
+        run: chmod +x gradlew && ./gradlew publish
